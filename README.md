@@ -6,4 +6,4 @@ I thought to make it a self-reliant Ansible for configuration management. That I
 This can be used for ubuntu servers too, you just need to comment out or remove the GUI based softwares.
 
 # Ansible Playbook command
-$ ansible-playbook -i ansible/ansible_install_system_tools/hosts ansible/ansible_install_system_tools/install_docker.yml
+$ ansible-playbook -i ansible_install_system_tools/hosts ansible_install_system_tools/install_docker.yml
