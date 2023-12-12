@@ -1,4 +1,4 @@
-- name: Become Sudo User
+- hosts: all
   remote_user: root
 
   tasks:
