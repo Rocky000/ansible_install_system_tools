@@ -1,0 +1,8 @@
+---
+ - name: Starting Ubuntu Software Installation .....
+   hosts: install_soft
+   vars:
+     date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+   roles:
+     - install_soft
+

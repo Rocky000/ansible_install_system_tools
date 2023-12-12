@@ -1,0 +1,7 @@
+[install_soft]
+<Destination_Host_IP> ansible_connection=ssh ansible_user=<User_Name> ansible_password=<User_Password>
+
+[local]
+127.0.0.1
+
+                               

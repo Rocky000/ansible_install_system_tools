@@ -1,0 +1,6 @@
+#Defining the python interpreter to avoid dependencies
+ansible_python_interpreter: /usr/bin/python3
+#it is better to use a credentials file with path then using a plain text
+user_name: rocky
+python3_version: python3.10
+node_version: v16.14.0
