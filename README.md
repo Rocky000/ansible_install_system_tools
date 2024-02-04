@@ -1,3 +1,8 @@
+# Local run prerequisites:
+  * python3
+  * python3-pip
+  * git
+    
 # Ansible Install System Tools and Software
 Recently, I was trying to automate the process of time conzuming and tring task that is installing softwares on a freshly installated Ubuntu Desktop.
 
@@ -13,7 +18,7 @@ This can be used for ubuntu servers too, you just need to comment out or remove 
 
 - on "./group_vars/all.yml" file change the values of following with desired version you want
 # Ansible Playbook command
--        ansible-playbook -i ./hosts ./install_docker.yml
+-        $ ansible-playbook -i ./hosts ./install_docker.yml
 
 - On the "install_docker.yml" file change the "hosts" value accroding to the hosts you want to run this ansible script
 - Example:
