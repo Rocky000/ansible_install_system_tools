@@ -1,90 +1,90 @@
-- hosts: all
-  remote_user: root
-
-  tasks:
+---
     - name: Update the System
-      ansible.builtin.command: 
-        argv:
-          - apt update && apt upgrade -y
-          - apt install vim -y
-          - apt install net-tools -y
-          - apt install unzip -y
-          - apt install curl -y
+      apt:
+        update_cache: yes
+        upgrade: yes
 
-    - name: Install Docker and Give Access to Non-Root User
-      ansible.builtin.command: 
-        argv: 
-          - curl -fsSL https://get.docker.com -o get-docker.sh
-          - sh get-docker.sh
-          - docker --version
-          - usermod -aG docker {{ user_name }}
+    - name: Install required packages
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - vim
+        - net-tools
+        - unzip
+        - curl
+        update_cache: yes
 
-    - name: Install AWS CLI
-      ansible.builtin.command: 
-        argv: 
-          - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          - unzip awscliv2.zip
-          - ./aws/install
-          - aws --version
 
-    - name: Install Git 
-      ansible.builtin.command: 
-        argv: 
-          - apt install git
+    - name: Install latest version of "JAVA"
+      apt:
+        name: default-jre
+        update_cache: yes
 
-    - name: Install Python3 
-      ansible.builtin.command: 
-        argv: 
-          - apt update
-          - apt install build-essential software-properties-common -y
-          - add-apt-repository -y ppa:deadsnakes/ppa
-          - apt update
-          - apt install {{ python3_version }} -y
-          - /usr/bin/{{ python3_version }} --version
+    - name: Download Docker installation script
+      get_url:
+        url: "https://get.docker.com"
+        dest: "/tmp/get-docker.sh"
 
-    - name: Install VSCode 
-      ansible.builtin.command: 
-        argv: 
-          - apt update && apt upgrade -y
-          - apt install software-properties-common apt-transport-https wget
-          - wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
-          - add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-          - apt update && sudo apt upgrade -y
-          - code --version
+    - name: Run Docker installation script
+      command: "sh /tmp/get-docker.sh"
 
-    - name: Install Postman 
-      ansible.builtin.command: 
-        argv: 
-          - apt update
-          - snap install postman
+    - name: Verify Docker installation
+      command: docker --version
 
-    - name: Install Postman 
-      ansible.builtin.command: 
-        argv: 
-          - apt update
-          - snap install postman
+    - name: Add user to docker group
+      user:
+        name: rocky
+        groups: docker
+        append: yes
 
-    - name: Install JAVA JDK 
-      ansible.builtin.command: 
-        argv: 
-          - apt update
-          - apt install default-jre
-          - java -version
+    - name: Download AWS CLI installer
+      get_url:
+        url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+        dest: "/tmp/awscliv2.zip"
 
-    - name: Install JAVA JDK 
-      ansible.builtin.command: 
-        argv: 
-          - apt update
-          - apt install default-jre
-          - java -version
+    - name: Unzip AWS CLI installer
+      unarchive:
+        src: "/tmp/awscliv2.zip"
+        dest: "/tmp/"
 
-    - name: Install NodeJS and NPM
-      ansible.builtin.command: 
-        argv: 
-          - apt update && apt upgrade -y
-          - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-          - nvm --version
-          - source ~/.bashrc
-          - nvm install {{ node_version }}
-          - node -v
-          - npm -v
+    - name: Run AWS CLI installer
+      command: "/tmp/aws/install"
+
+    - name: Check AWS CLI version
+      command: "aws --version"
+
+    - name: Install Prerquisites of Code
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - software-properties-common
+        - apt-transport-https
+        - wget
+
+    - name: Add VSCode repository GPG key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add VSCode repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+        state: present
+
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install VSCode
+      apt:
+        name: code
+        state: present
+
+    - name: Update the system Postman
+      apt:
+        update_cache: yes
+
+    - name: Install Postman
+      command: "snap install postman"
