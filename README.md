@@ -2,6 +2,7 @@
   * python3
   * python3-pip
   * git
+  * ssh
     
 # Ansible Install System Tools and Software
 Recently, I was trying to automate the process of time conzuming and tring task that is installing softwares on a freshly installated Ubuntu Desktop.
