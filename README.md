@@ -23,7 +23,7 @@ This can be used for ubuntu servers too, you just need to comment out or remove 
 
 - On the "install_docker.yml" file change the "hosts" value accroding to the hosts you want to run this ansible script
 - Example:
--     "hosts: local"
--     "hosts: install_soft"
+-     hosts: local
+-     hosts: install_soft
 
 
