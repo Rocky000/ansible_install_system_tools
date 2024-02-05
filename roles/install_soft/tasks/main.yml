@@ -15,7 +15,6 @@
         - curl
         update_cache: yes
 
-
     - name: Install latest version of "JAVA"
       apt:
         name: default-jre
@@ -54,35 +53,10 @@
     - name: Check AWS CLI version
       command: "aws --version"
 
-    - name: Install Prerquisites of Code
-      apt:
-        name: "{{ packages }}"
-      vars:
-        packages:
-        - software-properties-common
-        - apt-transport-https
-        - wget
-
-    - name: Add VSCode repository GPG key
-      apt_key:
-        url: https://packages.microsoft.com/keys/microsoft.asc
-        state: present
-
-    - name: Add VSCode repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-        state: present
-
-    - name: Update apt package cache
-      apt:
-        update_cache: yes
-
     - name: Install VSCode
-      apt:
-        name: code
-        state: present
+      command: "snap install --classic code"
 
-    - name: Update the system Postman
+    - name: Update the system for Postman
       apt:
         update_cache: yes
 
