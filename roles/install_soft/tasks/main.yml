@@ -62,3 +62,6 @@
 
     - name: Install Postman
       command: "snap install postman"
+
+    - name: Install Git
+      command: "apt install git-all"
