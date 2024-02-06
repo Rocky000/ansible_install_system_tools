@@ -1,5 +1,5 @@
 [install_soft]
-<remote_IP> ansible_connection=ssh ansible_user=<remote_user> ansible_password=<remote_pass>
+<remote_IP> ansible_connection=ssh ansible_user=<remote_user> ansible_password=<remote_pass> ansible_become_password=<remote_pass>
 
 [local]
 127.0.0.1 ansible_connection=ssh ansible_user=<local_user> ansible_password=<local_pass> ansible_become_password=<local_pass>
